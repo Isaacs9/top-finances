@@ -10,7 +10,7 @@ export class FinanceRepository implements IFinanceRepository {
   }
 
   async findById(id: number) {
-    const user = await this.knex<Finance>('finance').where({id}).first();
+    const user = await this.knex<Finance>('finances').where({id}).first();
     if (user) {
       return user;
     }
@@ -18,16 +18,16 @@ export class FinanceRepository implements IFinanceRepository {
   }
 
   async list() {
-    const rows = await this.knex<Finance>('users').select('*')
+    const rows = await this.knex<Finance>('finances').select('*')
         .orderBy('id', 'asc');
     return rows.map(r => new Finance(r));
   }
 
   async create(finance: Finance) {
-    const [user] = await this.knex<Finance>('finance')
+    const [user] = await this.knex<Finance>('finances')
         .insert({
           ...finance,
-          created: new Date(),
+          createdAt: new Date(),
         })
         .returning(['id']);
     return user.id;
@@ -36,11 +36,11 @@ export class FinanceRepository implements IFinanceRepository {
   async update(id: number, patch: Partial<Finance>) {
     const dbPatch: any = {...patch};
     dbPatch.updatedAt = new Date();
-    await this.knex<Finance>('users').where({id}).update(dbPatch);
+    await this.knex<Finance>('finances').where({id}).update(dbPatch);
   }
 
   async softDelete(id: number) {
-    await this.knex<Finance>('users').where({id}).update({
+    await this.knex<Finance>('finances').where({id}).update({
       isDeleted: true,
       deletedAt: new Date()
     });

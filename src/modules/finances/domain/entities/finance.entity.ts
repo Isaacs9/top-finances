@@ -7,8 +7,8 @@ export class Finance {
     @AutoMap() public amount: number;
     @AutoMap() public description: string;
     @AutoMap() public date: Date;
-    @AutoMap() public created?: Date;
-    @AutoMap() public updated?: Date;
+    @AutoMap() public createdAt?: Date;
+    @AutoMap() public updatedAt?: Date;
     @AutoMap() public isDeleted: boolean = false;
     @AutoMap(() => Date) public deletedAt?: Date;
 

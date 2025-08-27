@@ -7,6 +7,6 @@ export class CreateFinanceDto {
     @AutoMap() amount: number;
     @AutoMap() description: string;
     @AutoMap() date: Date;
-    @AutoMap() created?: Date;
-    @AutoMap() updated?: Date;
+    @AutoMap() createdAt?: Date;
+    @AutoMap() updatedAt?: Date;
 }

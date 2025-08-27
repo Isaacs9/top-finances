@@ -8,8 +8,10 @@ export async function up(knex: Knex): Promise<void> {
       t.decimal('amount', 14, 2).notNullable();
       t.string('description').nullable();
       t.timestamp('date').notNullable().defaultTo(knex.fn.now());
-      t.timestamp('created_at').defaultTo(knex.fn.now());
-      t.timestamp('updated_at').defaultTo(knex.fn.now());
+      t.timestamp('createdAt').defaultTo(knex.fn.now());
+      t.timestamp('updatedAt').defaultTo(knex.fn.now());
+      t.boolean('isDeleted').notNullable().defaultTo(false);
+      t.timestamp('deletedAt').nullable();
     });
   }
 }

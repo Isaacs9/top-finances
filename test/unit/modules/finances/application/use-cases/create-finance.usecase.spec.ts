@@ -67,7 +67,7 @@ describe('CreateFinanceUseCase', () => {
 
       const financeId = 1;
 
-      mapper.map.mockReturnValue(finance);
+      // mapper.map.mockReturnValue(finance);
       financeRepository.create.mockResolvedValue(financeId);
 
       const result = await useCase.execute(createFinanceDto);
@@ -97,7 +97,7 @@ describe('CreateFinanceUseCase', () => {
 
       const error = new Error('Database error');
 
-      mapper.map.mockReturnValue(finance);
+      // mapper.map.mockReturnValue(finance);
       financeRepository.create.mockRejectedValue(error);
 
       await expect(useCase.execute(createFinanceDto)).rejects.toThrow(error);

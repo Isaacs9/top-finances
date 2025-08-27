@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import {CreateFinanceUseCase} from "../application/use-case/create-finances.usecase";
 import {ListFinancesUseCase} from "../application/use-case/list-finances.usecase";
 import {UpdateFinanceUseCase} from "../application/use-case/update-finances.usecase";
 import {RemoveFinanceUseCase} from "../application/use-case/remove-finances.usecase";
 import {FindFinanceUseCase} from "../application/use-case/find-finances.usecase";
+import {MessagePattern} from "@nestjs/microservices";
 
-@Controller('finances')
+@Controller()
 export class FinancesController {
   constructor(
       private readonly createFinanceUseCase: CreateFinanceUseCase,
@@ -16,30 +17,30 @@ export class FinancesController {
   ) {
   }
 
-  @Get()
+  @MessagePattern({cmd: 'finances.list'})
   async list() {
     return this.listFinancesUseCase.execute();
   }
 
-  @Post()
-  async create(@Body() body:any) {
+  @MessagePattern({cmd: 'finances.create'})
+  async create(body: any) {
     return await this.createFinanceUseCase.execute(body);
   }
 
-  @Get(':id')
-  async find(@Param('id') id:string) {
-    return this.findFinanceUseCase.execute(Number(id));
+  @MessagePattern({cmd: 'finances.findByEmail'})
+  async find(data: { id: string }) {
+    return this.findFinanceUseCase.execute(Number(data.id));
   }
 
-  @Put(':id')
-  async update(@Param('id') id:string, @Body() body:any) {
-    await this.updateFinanceUseCase.execute(Number(id), body);
+  @MessagePattern({cmd: 'finances.update'})
+  async update(data: { id: number; patch: any }) {
+    await this.updateFinanceUseCase.execute(Number(data.id), data.patch);
     return { success: true };
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id:string) {
-    await this.removeFinanceUseCase.execute(Number(id));
+  @MessagePattern({cmd: 'finances.remove'})
+  async remove(data: { id: number }) {
+    await this.removeFinanceUseCase.execute(Number(data.id));
     return { success: true };
   }
 }
