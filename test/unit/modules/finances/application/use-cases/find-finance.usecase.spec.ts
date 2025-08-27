@@ -63,12 +63,12 @@ describe('FindFinanceUseCase', () => {
         amount: 100,
         description: 'Test Finance',
         date: new Date(),
-        created: undefined,
-        updated: undefined
+        createdAt: new Date(),
+        updatedAt: new Date()
       };
 
       financeRepository.findById.mockResolvedValue(finance);
-      mapper.map.mockReturnValue(financeListDto);
+      // mapper.map.mockReturnValue(financeListDto);
 
       const result = await useCase.execute(financeId);
 

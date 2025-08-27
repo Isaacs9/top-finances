@@ -54,8 +54,8 @@ describe('CreateFinanceUseCase', () => {
         amount: 100,
         description: 'Test Finance',
         date: new Date(),
-        created: undefined,
-        updated: undefined
+        createdAt: new Date(),
+        updatedAt: new Date()
       };
 
       const finance = new Finance({
@@ -84,8 +84,8 @@ describe('CreateFinanceUseCase', () => {
         amount: 50,
         description: 'Test Finance Error',
         date: new Date(),
-        created: undefined,
-        updated: undefined
+        createdAt: new Date(),
+        updatedAt: new Date()
       };
 
       const finance = new Finance({
