@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { KnexModule } from 'nestjs-knex';
-import { UsersModule } from './modules/users/users.module';
+import { FinancesModule } from './modules/finances/finances.module';
 import { AutomapperModule } from '@automapper/nestjs';
 import { classes } from '@automapper/classes';
 import { Knex } from 'knex';
@@ -15,7 +15,7 @@ export class TestAppModule {
                     config: testDb.client.config,
                 }),
                 AutomapperModule.forRoot({ strategyInitializer: classes() }),
-                UsersModule,
+                FinancesModule,
             ],
         };
     }

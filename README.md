@@ -1,10 +1,160 @@
-# top-finance (NestJS HTTP service) - DDD + Knex + Tests
+# Top Finances Microservice
 
-Serviço Financeiro implementado em NestJS com estrutura DDD e Knex para persistência.
-Expondo endpoints HTTP para CRUD de lançamentos financeiros.
+Microserviço **Top Finances** responsável pelo gerenciamento de finanças da plataforma Top.
 
-## Scripts
-- `npm run start:dev` — start em modo dev (watch)
-- `npm run migrate` — roda migrações (usa .env)
-- `npm run seed` — roda seeds
-- `npm test` — roda testes E2E (usa sqlite in-memory)
+## Pré-requisitos
+
+* Node.js >= 20
+* NestJS
+* Comunicação TCP (Dependente do Api Gateway https://github.com/Isaacs9/top-api-gateway)
+* npm ou yarn
+* Docker (para rodar banco PostgreSQL local ou via Testcontainers)
+
+## Instalação
+
+1. Clone o repositório:
+
+```bash
+git clone <url-do-repo-top-finances>
+cd top-finances
+```
+
+2. Instale as dependências:
+
+```bash
+npm install
+# ou
+yarn install
+```
+
+3. Configure o `.env`:
+
+Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+
+```env
+NODE_ENV='development'
+PORT=3002
+
+DB_CLIENT=pg
+DB_HOST=localhost
+DB_PORT=5432
+DB_USER=topfinance
+DB_PASSWORD=financepass
+DB_NAME=topdb
+DB_SCHEMA=finance
+```
+
+> Ajuste as variáveis de acordo com seu ambiente.
+
+## Rodando localmente
+
+Para iniciar o microserviço:
+
+```bash
+npm run start:dev
+# ou
+yarn start:dev
+```
+
+O serviço ficará disponível em: `http://localhost:3002`
+
+## Testes
+
+### Testes unitários
+
+```bash
+npm run test
+# ou
+yarn test
+```
+
+### Testes de integração (e2e) com Testcontainers
+
+```bash
+npm run test:e2e
+# ou
+yarn test:e2e
+```
+
+> Os testes e2e usam um container PostgreSQL temporário via **Testcontainers**, garantindo isolamento do banco local.
+
+### Cobertura de testes
+
+Para gerar relatório de cobertura:
+
+```bash
+npm run test:cov
+# ou
+yarn test:cov
+```
+
+O relatório será gerado em `coverage/`.
+
+Você pode ver o **print da cobertura** atual do projeto abaixo:
+
+![Print da cobertura](coverage.png)
+
+## Migrations
+
+Para rodar migrations manualmente:
+
+```bash
+npm run migrate:run
+```
+
+Para rodar seeds manualmente:
+
+```bash
+npm run seed:run
+```
+
+Para reverter migrations:
+
+```bash
+npm run migrate:rollback
+```
+
+> Certifique-se de que o banco configurado no `.env` esteja disponível.
+
+## Estrutura de diretórios sugerida
+
+```
+src/
+ ├─ modules/
+ │   └─ finances/
+ │       ├─ presentation/
+ │       ├─ application/
+ │       ├─ domain/
+ │       └─ infra/
+ ├─ infra/
+ │   ├─ database/
+ │   │   ├─ migrations/
+ │   │   └─ seeds/
+ │   └─ knexfile.ts
+ ├─ auth/
+ ├─ app.module.ts
+ └─ main.ts
+tests/
+ ├─ unit/
+ └─ e2e/
+coverage/
+ └─ (relatórios de cobertura)
+docs/
+ └─ coverage.png
+```
+
+## Observações
+
+* O microserviço utiliza **NestJS**, **Knex** e **PostgreSQL**.
+* Para testes e2e, o banco de testes é criado automaticamente em container via **Testcontainers**, garantindo isolamento do banco de produção.
+* O schema padrão é `finances`, configurável via variável `DB_SCHEMA`.
+
+## 👨‍💻 Autores
+
+- **Isaac Pereira** – arquitetura e desenvolvimento
+
+---
+
+## 📜 Licença
+
+Este projeto está licenciado sob os termos da licença MIT.
